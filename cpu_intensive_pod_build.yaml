@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cpu1pod-1-build
+  namespace: cpuintensive
+  selfLink: /api/v1/namespaces/cpuintensive/pods/cpu1pod-1-build
+  uid: 22f0dad0-3fbd-11e7-a711-525400c583ad
+  resourceVersion: '18919'
+  creationTimestamp: '2017-05-23T13:38:42Z'
+  labels:
+    openshift.io/build.name: cpu1pod-1
+  annotations:
+    openshift.io/build.name: cpu1pod-1
+    openshift.io/scc: privileged
+spec:
+  volumes:
+    -
+      name: docker-socket
+      hostPath:
+        path: /var/run/docker.sock
+    -
+      name: builder-dockercfg-zb14v-push
+      secret:
+        secretName: builder-dockercfg-zb14v
+    -
+      name: builder-token-6e2ta
+      secret:
+        secretName: builder-token-6e2ta
+  containers:
+    -
+      name: sti-build
+      image: 'openshift/origin-sti-builder:v1.3.0'
+      args:
+        - '--loglevel=0'
+      env:
+        -
+          name: BUILD
+          value: "{\"kind\":\"Build\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"cpu1pod-1\",\"namespace\":\"cpuintensive\",\"selfLink\":\"/oapi/v1/namespaces/cpuintensive/builds/cpu1pod-1\",\"uid\":\"22de88d0-3fbd-11e7-a711-525400c583ad\",\"resourceVersion\":\"18867\",\"creationTimestamp\":\"2017-05-23T13:38:42Z\",\"labels\":{\"app\":\"cpu1pod\",\"buildconfig\":\"cpu1pod\",\"openshift.io/build-config.name\":\"cpu1pod\",\"openshift.io/build.start-policy\":\"Serial\"},\"annotations\":{\"openshift.io/build-config.name\":\"cpu1pod\",\"openshift.io/build.number\":\"1\"}},\"spec\":{\"serviceAccount\":\"builder\",\"source\":{\"type\":\"Git\",\"git\":{\"uri\":\"https://github.com/freakz867/python_multiprocessing\",\"ref\":\"master\"}},\"strategy\":{\"type\":\"Source\",\"sourceStrategy\":{\"from\":{\"kind\":\"DockerImage\",\"name\":\"centos/python-35-centos7@sha256:47661edd3205cffc732f08d4e8af06cd1ea93cc55369b1420bd178a7d588a94e\"}}},\"output\":{\"to\":{\"kind\":\"DockerImage\",\"name\":\"172.30.53.244:5000/cpuintensive/cpu1pod:latest\"},\"pushSecret\":{\"name\":\"builder-dockercfg-zb14v\"}},\"resources\":{},\"postCommit\":{},\"triggeredBy\":[{\"message\":\"Build configuration change\"}]},\"status\":{\"phase\":\"New\",\"outputDockerImageReference\":\"172.30.53.244:5000/cpuintensive/cpu1pod:latest\",\"config\":{\"kind\":\"BuildConfig\",\"namespace\":\"cpuintensive\",\"name\":\"cpu1pod\"}}}\n"
+        -
+          name: SOURCE_REPOSITORY
+          value: 'https://github.com/freakz867/python_multiprocessing'
+        -
+          name: SOURCE_URI
+          value: 'https://github.com/freakz867/python_multiprocessing'
+        -
+          name: SOURCE_REF
+          value: master
+        -
+          name: ORIGIN_VERSION
+          value: v1.3.0
+        -
+          name: ALLOWED_UIDS
+          value: 1-
+        -
+          name: DROP_CAPS
+          value: 'KILL,MKNOD,SETGID,SETUID,SYS_CHROOT'
+        -
+          name: PUSH_DOCKERCFG_PATH
+          value: /var/run/secrets/openshift.io/push
+      resources:
+      volumeMounts:
+        -
+          name: docker-socket
+          mountPath: /var/run/docker.sock
+        -
+          name: builder-dockercfg-zb14v-push
+          readOnly: true
+          mountPath: /var/run/secrets/openshift.io/push
+        -
+          name: builder-token-6e2ta
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 30
+  dnsPolicy: ClusterFirst
+  host: origin
+  serviceAccountName: builder
+  serviceAccount: builder
+  nodeName: origin
+  securityContext:
+  imagePullSecrets:
+    -
+      name: builder-dockercfg-zb14v
+status:
+  phase: Succeeded
+  conditions:
+    -
+      type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2017-05-23T13:38:42Z'
+      reason: PodCompleted
+    -
+      type: Ready
+      status: 'False'
+      lastProbeTime: null
+      lastTransitionTime: '2017-05-23T13:40:56Z'
+      reason: PodCompleted
+    -
+      type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2017-05-23T13:38:42Z'
+  hostIP: 10.0.2.15
+  podIP: 172.17.0.4
+  startTime: '2017-05-23T13:38:42Z'
+  containerStatuses:
+    -
+      name: sti-build
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2017-05-23T13:38:46Z'
+          finishedAt: '2017-05-23T13:40:56Z'
+          containerID: 'docker://4074831d62450d6bde0ffd5a9560e92478734f7fe1d3f46988bf940be835a504'
+      lastState:
+      ready: false
+      restartCount: 0
+      image: 'openshift/origin-sti-builder:v1.3.0'
+      imageID: 'docker://sha256:1d97be2a77ff476f85bb020a75b6a94f6326ee73d7612886da4801f0363dcad0'
+      containerID: 'docker://4074831d62450d6bde0ffd5a9560e92478734f7fe1d3f46988bf940be835a504'

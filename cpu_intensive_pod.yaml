@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cpu1pod-1-1mzaq
+  generateName: cpu1pod-1-
+  namespace: cpuintensive
+  selfLink: /api/v1/namespaces/cpuintensive/pods/cpu1pod-1-1mzaq
+  uid: b520cc2e-3ff0-11e7-a711-525400c583ad
+  resourceVersion: '81787'
+  creationTimestamp: '2017-05-23T19:47:52Z'
+  labels:
+    app: cpu1pod
+    deployment: cpu1pod-1
+    deploymentconfig: cpu1pod
+  annotations:
+    kubernetes.io/created-by: "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"cpuintensive\",\"name\":\"cpu1pod-1\",\"uid\":\"72bb4520-3fbd-11e7-a711-525400c583ad\",\"apiVersion\":\"v1\",\"resourceVersion\":\"26867\"}}\n"
+    openshift.io/deployment-config.latest-version: '1'
+    openshift.io/deployment-config.name: cpu1pod
+    openshift.io/deployment.name: cpu1pod-1
+    openshift.io/scc: anyuid
+spec:
+  volumes:
+    -
+      name: default-token-lf51h
+      secret:
+        secretName: default-token-lf51h
+  containers:
+    -
+      name: cpu1pod
+      image: '172.30.53.244:5000/cpuintensive/cpu1pod@sha256:fd7a0ac1b8096f5f19ec01f9ca6d946f7488b33a5f5121c14e2fda1e7f887157'
+      ports:
+        -
+          containerPort: 8080
+          protocol: TCP
+      resources:
+      volumeMounts:
+        -
+          name: default-token-lf51h
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      imagePullPolicy: Always
+      securityContext:
+        capabilities:
+          drop:
+            - MKNOD
+            - SYS_CHROOT
+        privileged: false
+        seLinuxOptions:
+          level: 's0:c8,c2'
+  restartPolicy: Always
+  terminationGracePeriodSeconds: 30
+  dnsPolicy: ClusterFirst
+  host: origin
+  serviceAccountName: default
+  serviceAccount: default
+  nodeName: origin
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c8,c2'
+  imagePullSecrets:
+    -
+      name: default-dockercfg-iommt
+status:
+  phase: Running
+  conditions:
+    -
+      type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2017-05-23T19:47:52Z'
+    -
+      type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2017-06-05T16:43:37Z'
+    -
+      type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2017-05-23T19:47:52Z'
+  hostIP: 10.0.2.15
+  podIP: 172.17.0.10
+  startTime: '2017-05-23T19:47:52Z'
+  containerStatuses:
+    -
+      name: cpu1pod
+      state:
+        running:
+          startedAt: '2017-06-05T16:43:08Z'
+      lastState:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2017-05-24T16:54:43Z'
+          finishedAt: '2017-05-24T16:55:32Z'
+          containerID: 'docker://0da2dede0ae34a2b888fcdf42af7e6762d4567617cba86298dedd99366e3ea20'
+      ready: true
+      restartCount: 104
+      image: '172.30.53.244:5000/cpuintensive/cpu1pod@sha256:fd7a0ac1b8096f5f19ec01f9ca6d946f7488b33a5f5121c14e2fda1e7f887157'
+      imageID: 'docker://sha256:ea44095f1d3cd10e34bdc884d38ea1065bef5795f217cd3c7525e7b0ddfdacfb'
+      containerID: 'docker://7ccc123fd54dfe27afd6cacf693dbe33788ac604952bdb489a9b3932f8417a55'
